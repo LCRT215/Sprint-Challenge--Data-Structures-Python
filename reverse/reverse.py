@@ -1,6 +1,8 @@
 class Node:
     def __init__(self, value=None, next_node=None):
+        # the value at this linked list node
         self.value = value
+        # reference to the next node in the list
         self.next_node = next_node
 
     def get_value(self):
@@ -10,10 +12,13 @@ class Node:
         return self.next_node
 
     def set_next(self, new_next):
+        # set this node's next_node reference to the passed in node
         self.next_node = new_next
+
 
 class LinkedList:
     def __init__(self):
+        # reference to the head of the list
         self.head = None
 
     def add_to_head(self, value):
@@ -27,16 +32,35 @@ class LinkedList:
     def contains(self, value):
         if not self.head:
             return False
-
+        # get a reference to the node we're currently at; update this as we
+        # traverse the list
         current = self.head
-
+        # check to see if we're at a valid node
         while current:
+            # return True if the current value we're looking at matches our
+            # target value
             if current.get_value() == value:
                 return True
-
+            # update our current node to the current node's next node
             current = current.get_next()
-
+        # if we've gotten here, then the target node isn't in our list
         return False
 
     def reverse_list(self, node, prev):
-        pass
+        # initialize a current and previous node variables
+        curr_node = self.head
+        prev_node = None
+        # iterate through the list while the current node exists
+        while curr_node is not None:
+            # initialize the next node variable
+            next_node = curr_node.get_next()
+            # reverse the node by directing it to the previous
+            curr_node.set_next(prev_node)
+            # set previous node to the next
+            prev_node = curr_node
+            # then set current node to the next
+            curr_node = next_node
+        # assign head to previous node since current is None
+        self.head = prev_node
+
+    # runtime = O(n)
